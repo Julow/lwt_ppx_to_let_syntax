@@ -33,4 +33,5 @@
   cmdliner
   ocamlformat
   ocamlformat-lib
-  (lwt :with-test)))
+  (lwt :with-test)
+  (ocaml-index :with-test)))
