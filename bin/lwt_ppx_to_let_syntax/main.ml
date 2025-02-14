@@ -12,7 +12,7 @@ let pp_format_exn ppf = function
         Ocamlformat_utils.Parsing.Location.print_loc loc
   | exn -> Format.fprintf ppf "Unhandled exception: %s" (Printexc.to_string exn)
 
-let migrate_file ~formatted ~errors ~modify_ast file =
+let migrate_file ~formatted ~errors ~modify_ast () file =
   if is_ml_file file then (
     try
       Ocamlformat_utils.format_structure_in_place ~file ~modify_ast;
@@ -30,7 +30,8 @@ let main use_lwt_bind paths =
   in
   List.iter
     (Fs_utils.scan_dir ~descend_into
-       (migrate_file ~formatted ~errors ~modify_ast))
+       (migrate_file ~formatted ~errors ~modify_ast)
+       ())
     paths;
   Format.printf "Formatted %d files, %d errors\n%!" !formatted !errors;
   if !errors > 0 then exit 1
