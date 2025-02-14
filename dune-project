@@ -23,3 +23,14 @@
  (name lwt_ppx_to_let_syntax)
  (synopsis "A tool for migrating away from lwt_ppx")
  (depends ocaml cmdliner ocamlformat ocamlformat-lib))
+
+(package
+ (name lwt_to_direct_style)
+ (synopsis
+  "A tool for migrating from Lwt to direct-style concurrency libraries")
+ (depends
+  ocaml
+  cmdliner
+  ocamlformat
+  ocamlformat-lib
+  (lwt :with-test)))
