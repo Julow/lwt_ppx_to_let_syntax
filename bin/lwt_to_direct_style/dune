@@ -1,0 +1,10 @@
+(executable
+ (public_name lwt-to-direct-style)
+ (package lwt_to_direct_style)
+ (name main)
+ (libraries
+  cmdliner
+  compiler-libs
+  merlin-lib.index_format
+  fs_utils
+  ocamlformat_utils))
