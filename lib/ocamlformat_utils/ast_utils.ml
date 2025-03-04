@@ -13,8 +13,9 @@ let mk_let' ?(loc_in = !default_loc) ?(rec_ = Nonrecursive) bindings rhs =
   let bindings = { pvbs_bindings = bindings; pvbs_rec = rec_ } in
   Exp.let_ ~loc_in bindings rhs
 
-let mk_let ?loc_in ?rec_ pat ?(args = []) lhs rhs =
-  let binding = Vb.mk ~is_pun:false pat args (Pfunction_body lhs) in
+let mk_let ?loc_in ?rec_ ?(is_pun = false) ?value_constraint pat ?(args = [])
+    lhs rhs =
+  let binding = Vb.mk ~is_pun ?value_constraint pat args (Pfunction_body lhs) in
   mk_let' ?loc_in ?rec_ [ binding ] rhs
 
 let mk_function_cases ?(loc = !default_loc) ?(attrs = []) cases =
@@ -26,6 +27,8 @@ let mk_longident = function
       let open Longident in
       mk_loc (List.fold_left (fun acc seg -> Ldot (acc, seg)) (Lident hd) tl)
 
+let mk_constr_exp ?arg cstr = Exp.construct (mk_longident [ cstr ]) arg
+let same_longident a b = Longident.flatten a = b
 let mk_exp_var s = Exp.ident (mk_longident [ s ])
 let mk_unit_ident = mk_longident [ "()" ]
 let mk_unit_pat = Pat.construct mk_unit_ident None
